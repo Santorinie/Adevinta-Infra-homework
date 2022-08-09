@@ -7,7 +7,6 @@ builder.Services.AddControllers();
 // API healthcheck
 builder.Services.AddHealthChecks();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

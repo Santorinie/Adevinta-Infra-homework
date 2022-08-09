@@ -2,13 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Adevinta_hw</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
+    <None Remove="Swashbuckle.AspNetCore.Swagger" />
+    <None Remove="Swashbuckle.AspNetCore.SwaggerGen" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
