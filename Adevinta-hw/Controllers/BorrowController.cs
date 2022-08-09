@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using Adevinta_hw.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using Adevinta_hw.Helpers;
 
 namespace Adevinta_hw.Controllers
 {
@@ -9,24 +12,67 @@ namespace Adevinta_hw.Controllers
     [Route("[controller]")]
     public class BorrowController : ControllerBase
     {
-        
+
+        // This Class instance gets wiped out on every call.
+        // Storing data locally is not possible
+
+        private FileWriterHelper _helper { get; set; } = new(@"notSoSecureDB.json");
 
 
-      
-        //Get method that returns all borrows
+        //Get method that returns a record matching the Id
+        // I know it is extremely unefficient, it's for the task I was given.
         [HttpGet]
-        public string Get()
+        [Route("{borrowId}")]
+        public Borrow Get(int borrowId)
         {
-            return "hey";
+
+            var Content = GetJSON();
+            
+            // Try to find a record with the corresponding id
+            try
+            {
+                return Content.First(x => x.BorrowId == borrowId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         // Post method that lets you add data
         [HttpPost]
         [Route("add")]
-        public void Post(Borrow borrow)
+        public IActionResult Post(Borrow borrow)
         {
-            borrow.BorrowDate = DateTime.Now;
-            //todo: Store data
+            var Content = GetJSON();
+
+            if (Content.Contains(borrow))
+            {
+                return BadRequest("Object already exists");
+            }
+            else
+            {
+                
+                int lastId = Content.MaxBy(x => x.BorrowId).BorrowId;
+                borrow.BorrowDate = DateTime.Now;
+                borrow.BorrowId = lastId + 1;
+                Content.Add(borrow);
+
+                _helper.Write(GenerateJSON(Content));
+
+                return Ok("Record saved");
+            }
+
+        }
+
+        private List<Borrow> GetJSON()
+        {
+            return JsonSerializer.Deserialize<List<Borrow>>(_helper.Read());
+        }
+
+        private string GenerateJSON(IEnumerable<Borrow> content)
+        {
+            return JsonSerializer.Serialize(content);
         }
     }
 }

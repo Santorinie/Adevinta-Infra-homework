@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Adevinta_hw.Controllers;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
