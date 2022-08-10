@@ -1,11 +1,15 @@
 ﻿using System;
 namespace Adevinta_hw.Helpers
 {
-    public class FileWriterHelper
+    public class FileTaskHelper
     {
+
+        // This class helps Writing and Reading files
+
+
         private string Path { get; set; }
 
-        public FileWriterHelper(string filePath)
+        public FileTaskHelper(string filePath)
         {
             this.Path = filePath;
         }

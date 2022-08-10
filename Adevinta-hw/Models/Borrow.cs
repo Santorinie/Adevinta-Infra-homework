@@ -5,6 +5,7 @@ namespace Adevinta_hw.Models
 {
     public class Borrow
     {
+        // Borrow Model for Entity Framework ORM
 
         public int BorrowId { get; set; }
 

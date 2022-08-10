@@ -8,6 +8,10 @@ namespace Adevinta_hw.Migrations
 {
     public partial class Initial : Migration
     {
+        // This class was created by Entity Framework Object-relational Mapper (ORM) 
+        // This class sets up the tables for my MySQL database running on Docker
+
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()

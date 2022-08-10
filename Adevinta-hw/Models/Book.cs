@@ -5,6 +5,8 @@ namespace Adevinta_hw.Models
 {
     public class Book
     {
+        // Book Model for Entity Framework ORM
+
         public int BookId { get; set; }
 
         [MaxLength(100)]

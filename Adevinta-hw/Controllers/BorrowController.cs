@@ -14,9 +14,10 @@ namespace Adevinta_hw.Controllers
     {
 
         // This Class instance gets wiped out on every call.
-        // Storing data locally is not possible
+        // Storing data in this class is not possible
 
-        private FileWriterHelper _helper { get; set; } = new(@"notSoSecureDB.json");
+        // Dependency Injection for managing File Write and Read operations
+        private FileTaskHelper _helper { get; set; } = new(@"notSoSecureDB.json");
 
 
         //Get method that returns a record matching the Id
@@ -64,6 +65,8 @@ namespace Adevinta_hw.Controllers
             }
 
         }
+
+        //JSON Serialize and Deserializers
 
         private List<Borrow> GetJSON()
         {

@@ -2,6 +2,9 @@
 
 public class WeatherForecast
 {
+
+    // Auto-generated
+
     public DateTime Date { get; set; }
 
     public int TemperatureC { get; set; }
