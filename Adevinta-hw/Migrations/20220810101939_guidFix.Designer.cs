@@ -3,6 +3,7 @@ using System;
 using Adevinta_hw.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adevinta_hw.Migrations
 {
     [DbContext(typeof(KonyvtarDbContext))]
-    partial class KonyvtarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220810101939_guidFix")]
+    partial class guidFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
