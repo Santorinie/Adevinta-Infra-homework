@@ -7,11 +7,12 @@ using System.IO;
 using Adevinta_hw.Helpers;
 using Adevinta_hw.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adevinta_hw.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("v1")]
     public class BorrowController : ControllerBase
     {
 
@@ -32,7 +33,7 @@ namespace Adevinta_hw.Controllers
         //Get method that returns a record matching the Id
         // I know Task 1 solution is extremely unefficient, it's for the task I was given.
         [HttpGet]
-        [Route("{borrowId}")]
+        [Route("book/{borrowId}")]
         public Borrow Get(int borrowId)
         {
 
@@ -54,7 +55,8 @@ namespace Adevinta_hw.Controllers
 
             try
             {
-                var result = _context.Borrows.First(x => x.BorrowId == borrowId);
+                var result = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
+
 
                 return result;
 
@@ -69,7 +71,7 @@ namespace Adevinta_hw.Controllers
 
         // Post method that lets you add data
         [HttpPost]
-        [Route("add")]
+        [Route("book/add")]
         public async Task<IActionResult> Post(Borrow borrow)
         {
 
