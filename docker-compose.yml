@@ -3,9 +3,12 @@ services:
     db:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
-        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: my-secret-pw
+        volumes:
+      # this style the data is attached to the container /var/lib/mysql directory ##
+      # this style is storing the data on the host machine (the machine where you run docker-compose up) ##
+            - ./serverdatabase:/var/lib/mysql # this will creata a folder "serverdatabase" automatically and copies the contents of /var/lib/mysql ##
         ports:
             - 3308:3306
 

@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1700.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adevinta-hw", "Adevinta-hw\Adevinta-hw.csproj", "{30C6C961-8553-4354-9CDA-2E0BD6DCEB83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationHelper", "MigrationHelper\MigrationHelper.csproj", "{6F04B294-B03F-4AC3-939E-41D43B8E0E51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{30C6C961-8553-4354-9CDA-2E0BD6DCEB83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C6C961-8553-4354-9CDA-2E0BD6DCEB83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C6C961-8553-4354-9CDA-2E0BD6DCEB83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F04B294-B03F-4AC3-939E-41D43B8E0E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F04B294-B03F-4AC3-939E-41D43B8E0E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F04B294-B03F-4AC3-939E-41D43B8E0E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F04B294-B03F-4AC3-939E-41D43B8E0E51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
