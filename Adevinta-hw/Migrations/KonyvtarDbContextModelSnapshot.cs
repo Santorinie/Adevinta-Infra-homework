@@ -57,6 +57,9 @@ namespace Adevinta_hw.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("BorrowId");
 
                     b.HasIndex("BorrowedBookBookId");

@@ -15,6 +15,8 @@ namespace Adevinta_hw.Models
         public Book BorrowedBook { get; set; }
 
         public DateTime BorrowDate { get; set; }
+        
+        public DateTime Expiration { get; set; }
     }
 }
 
