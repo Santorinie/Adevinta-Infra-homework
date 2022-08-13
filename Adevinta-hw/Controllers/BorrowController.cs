@@ -86,7 +86,7 @@ namespace Adevinta_hw.Controllers
         }
 
 
-
+        // Put method to replace records
         [HttpPut]
         [Route("book/change/{borrowId}")]
         public async Task<IActionResult> Put(int borrowId, [FromBody]Borrow borrow)
@@ -127,6 +127,7 @@ namespace Adevinta_hw.Controllers
 
         }
 
+        // Delete method
         [HttpDelete]
         [Route("book/delete/{borrowId}")]
         public async Task<IActionResult> Delete(int borrowId)
@@ -136,6 +137,8 @@ namespace Adevinta_hw.Controllers
                 var entity = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
 
                 _context.Borrows.Remove(entity);
+
+                _context.Books.Remove(entity.BorrowedBook);
 
                 await _context.SaveChangesAsync();
 

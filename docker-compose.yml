@@ -6,9 +6,7 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: my-secret-pw
         volumes:
-      # this style the data is attached to the container /var/lib/mysql directory ##
-      # this style is storing the data on the host machine (the machine where you run docker-compose up) ##
-            - ./serverdatabase:/var/lib/mysql # this will creata a folder "serverdatabase" automatically and copies the contents of /var/lib/mysql ##
+            - ./serverdatabase:/var/lib/mysql # this will creata a folder "serverdatabase" automatically and copies the contents of /var/lib/mysql #
         ports:
             - 3308:3306
 
@@ -36,7 +34,24 @@ services:
         depends_on:
             - backend
             - backendv2
+            - varnish
         volumes:
-            - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
+            - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
         ports:
             - 80:80
+
+    varnish:
+        image: varnish:stable
+        container_name: varnish
+        volumes:
+          - "./default.vcl:/etc/varnish/default.vcl"
+        ports:
+          - 8080:80
+        tmpfs:
+          - /var/lib/varnish:exec
+        environment:
+          - VARNISH_SIZE=2G  
+        command: "-p default_keep=300"
+        depends_on:
+          - backend
+          - backendv2 
