@@ -28,21 +28,80 @@ namespace Adevinta_hw.Controllers
         //Get method that returns a record matching the Id
         [HttpGet]
         [Route("book/{borrowId}")]
-        public Borrow Get(int borrowId)
+        public IActionResult Get(int borrowId)
         {
             try
             {
                 var result = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
 
 
-                return result;
+                return Ok(result);
 
             }
             catch (Exception)
             {
-                return null;
+                return NoContent();
             }
 
+        }
+
+        //Get method that returns a record matching the name
+        [HttpGet]
+        [Route("book/name/{borrowerName}")]
+        public IActionResult Get(string borrowerName)
+        {
+            try
+            {
+                var result = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowerName == borrowerName);
+
+
+                return Ok(result);
+
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+
+        }
+
+        //Get method that returns all of the borrows
+        [HttpGet]
+        [Route("book/all")]
+        public IActionResult Get()
+        {
+            try
+            {
+                var result = _context.Borrows.Include(x => x.BorrowedBook);
+
+
+                return Ok(result);
+
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+
+        }
+
+
+
+        [HttpPut]
+        [Route("book/change/{borrowId}")]
+        public async Task<IActionResult> Put(int borrowId, [FromBody]Borrow borrow)
+        {
+            var entity = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
+
+            entity.BorrowerName = borrow.BorrowerName;
+            entity.BorrowedBook.Title = borrow.BorrowedBook.Title;
+            entity.BorrowedBook.Author = borrow.BorrowedBook.Author;
+
+           await _context.SaveChangesAsync();
+
+            return Ok("record changed!");
+            
+            
         }
 
 
@@ -66,6 +125,26 @@ namespace Adevinta_hw.Controllers
                 return Conflict("Already exists");
             }
 
+        }
+
+        [HttpDelete]
+        [Route("book/delete/{borrowId}")]
+        public async Task<IActionResult> Delete(int borrowId)
+        {
+            try
+            {
+                var entity = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
+
+                _context.Borrows.Remove(entity);
+
+                await _context.SaveChangesAsync();
+
+                return Ok("Deleted");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
         }
 
     }

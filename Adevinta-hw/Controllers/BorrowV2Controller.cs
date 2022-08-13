@@ -41,6 +41,68 @@ namespace Adevinta_hw.Controllers
 
         }
 
+        //Get method that returns a record matching the name
+        [HttpGet]
+        [Route("book/name/{borrowerName}")]
+        public IActionResult Get(string borrowerName)
+        {
+            try
+            {
+                var result = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowerName == borrowerName);
+
+
+                return Ok(result);
+
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+
+        }
+
+        //Get method that returns all of the borrows
+        [HttpGet]
+        [Route("book/all")]
+        public IActionResult Get()
+        {
+            try
+            {
+                var result = _context.Borrows.Include(x => x.BorrowedBook);
+
+
+                return Ok(result);
+
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+
+        }
+
+        [HttpPut]
+        [Route("book/change/{borrowId}")]
+        public async Task<IActionResult> Put(int borrowId, [FromBody] Borrow borrow)
+        {
+            var entity = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
+
+            entity.BorrowerName = borrow.BorrowerName;
+            entity.BorrowedBook.Title = borrow.BorrowedBook.Title;
+            entity.BorrowedBook.Author = borrow.BorrowedBook.Author;
+            var asd = DateTime.MinValue;
+            if (borrow.Expiration != DateTime.MinValue)
+            {
+                entity.Expiration = borrow.Expiration;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("record changed!");
+
+
+        }
+
 
         // Post method that lets you add data
         [HttpPost]
@@ -51,7 +113,12 @@ namespace Adevinta_hw.Controllers
             if (!_context.Borrows.Any(x => x.BorrowerName == borrow.BorrowerName && x.BorrowedBook.Title == borrow.BorrowedBook.Title))
             {
                 borrow.BorrowDate = DateTime.UtcNow;
-                borrow.Expiration = borrow.BorrowDate + _expiration;
+
+                if (borrow.Expiration == DateTime.MinValue)
+                {
+                    borrow.Expiration = borrow.BorrowDate + _expiration;
+                }
+
                 _context.Borrows.Add(borrow);
                 await _context.SaveChangesAsync();
 
@@ -63,6 +130,27 @@ namespace Adevinta_hw.Controllers
                 return Conflict("Already exists");
             }
 
+        }
+
+
+        [HttpDelete]
+        [Route("book/delete/{borrowId}")]
+        public async Task<IActionResult> Delete(int borrowId)
+        {
+            try
+            {
+                var entity = _context.Borrows.Include(x => x.BorrowedBook).First(x => x.BorrowId == borrowId);
+
+                _context.Borrows.Remove(entity);
+
+                await _context.SaveChangesAsync();
+
+                return Ok("Deleted");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
         }
 
 
